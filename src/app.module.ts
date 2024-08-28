@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { SwapiModule } from './modules/swapi/swapi.module';
+import { ScheduledTasksModule } from '@/modules/scheduled-tasks/scheduled-tasks.module';
 
 @Module({
   imports: [
@@ -18,8 +19,9 @@ import { SwapiModule } from './modules/swapi/swapi.module';
     AuthModule,
     UsersModule,
     SharedModule,
+    ScheduleModule,
     SwapiModule,
+    ScheduledTasksModule,
   ],
 })
-export class AppModule {
-}
+export class AppModule {}
