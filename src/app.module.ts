@@ -6,6 +6,7 @@ import { config } from './config/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './modules/shared/shared.module';
+import { SwapiModule } from './modules/swapi/swapi.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SharedModule } from './modules/shared/shared.module';
     AuthModule,
     UsersModule,
     SharedModule,
+    SwapiModule,
   ],
 })
 export class AppModule {
