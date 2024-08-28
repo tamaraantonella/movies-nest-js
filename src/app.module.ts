@@ -6,6 +6,7 @@ import { config } from './config/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './modules/shared/shared.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { SwapiModule } from './modules/swapi/swapi.module';
 import { ScheduledTasksModule } from '@/modules/scheduled-tasks/scheduled-tasks.module';
