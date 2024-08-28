@@ -17,5 +17,10 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*", "types/**/*"],
+  "typeRoots": [
+    "types",
+    "./node_modules/@types",
+  ]
 }
