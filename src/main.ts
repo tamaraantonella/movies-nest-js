@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { patchNestjsSwagger } from '@anatine/zod-nestjs';
+import { patchNestjsSwagger, ZodValidationPipe } from '@anatine/zod-nestjs';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ConfigProps } from './config/config.types';
@@ -14,6 +14,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
   app.use(helmet());
   app.use(morgan('dev'));
+  app.useGlobalPipes(new ZodValidationPipe());
 
   const config = new DocumentBuilder()
     .setTitle('Movies API')
@@ -30,4 +31,5 @@ async function bootstrap() {
     console.log(`⚡​Listening at http://localhost:${port}/${globalPrefix}`);
   });
 }
+
 bootstrap();
