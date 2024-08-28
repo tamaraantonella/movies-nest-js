@@ -41,6 +41,8 @@ model Movie {
   producer     String
   url          String    @unique
   director     String
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @default(now()) @map("updated_at")
 
   @@index([url])
   @@map("movies")
