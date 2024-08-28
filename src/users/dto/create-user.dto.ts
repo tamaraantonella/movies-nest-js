@@ -3,11 +3,11 @@ import { extendApi } from '@anatine/zod-openapi';
 import { z } from 'zod';
 import { Role } from '@prisma/client';
 
-const CreateUserSchema = extendApi(z.strictObject({
+export const CreateUserSchema = extendApi(z.strictObject({
   email: z.string().email(),
   password: z.string().min(8),
   name: z.string(),
-  role: z.nativeEnum(Role).optional().default(Role.REGULAR),
+  role: z.nativeEnum(Role),
 }));
 
 export class CreateUserDto extends createZodDto(CreateUserSchema) {
