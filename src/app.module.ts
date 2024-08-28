@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { MoviesModule } from './movies/movies.module';
+import { MoviesModule } from './modules/movies/movies.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { config } from './config/config';
 import { AuthModule } from './auth/auth.module';
