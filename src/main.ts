@@ -4,12 +4,16 @@ import { patchNestjsSwagger } from '@anatine/zod-nestjs';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ConfigProps } from './config/config.types';
+import helmet from 'helmet';
+import * as morgan from 'morgan';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   const globalPrefix = 'v1';
   app.setGlobalPrefix(globalPrefix);
+  app.use(helmet());
+  app.use(morgan('dev'));
 
   const config = new DocumentBuilder()
     .setTitle('Movies API')
