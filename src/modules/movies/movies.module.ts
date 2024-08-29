@@ -6,7 +6,7 @@ import { HttpModule } from '@nestjs/axios';
 import { SharedModule } from '../shared/shared.module';
 
 @Module({
-  imports: [ConfigModule, HttpModule, SharedModule],
+  imports: [SharedModule],
   controllers: [MoviesController],
   providers: [MoviesService],
   exports: [MoviesService],

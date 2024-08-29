@@ -1,21 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { CreateMovieDto } from './dto/create-movie.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreateMovieDto, CreateMovieSchema } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
-import { HttpService } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
 import { MovieSchema, MoviesEnvelopeDto } from './dto/movie.dto';
 import { PrismaService } from '../shared/prisma.service';
 import { SwapiMovie } from '@/modules/swapi/types/swapi-response';
 
 @Injectable()
 export class MoviesService {
-  constructor(
-    private http: HttpService,
-    private configService: ConfigService,
-    private prisma: PrismaService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
-  create(createMovieDto: CreateMovieDto) {
+  async create(createMovieDto: CreateMovieDto) {
+    const existingMovie = await this.prisma.movie.findUnique({
+      where: {
+        url: createMovieDto.url,
+      },
+    });
+
+    if (existingMovie) {
+      throw new BadRequestException('Movie already exists');
+    }
     return this.prisma.movie.create({
       data: {
         title: createMovieDto.title,
@@ -77,7 +80,7 @@ export class MoviesService {
     return MovieSchema.parse(deletedMovie);
   }
 
-  private async syncMovieWithAPI(movie: SwapiMovie) {
+  async syncMovieWithAPI(movie: SwapiMovie) {
     const existingMovie = await this.prisma.movie.findUnique({
       where: {
         url: movie.url,
