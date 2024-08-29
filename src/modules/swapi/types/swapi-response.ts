@@ -4,9 +4,8 @@ export type SwapiMovie = {
   opening_crawl: string;
   director: string;
   producer: string;
-  release_date: string;
   created: string;
-  edited: string;
+  edited: string | null;
   url: string;
 };
 
