@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, CreateUserSchema } from './dto/create-user.dto';
 import { PrismaService } from '../shared/prisma.service';
 import * as bcrypt from 'bcrypt';
 
@@ -8,13 +8,17 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    const hashedPassword = await this.hashPassword(createUserDto.password);
+    const parsed = CreateUserSchema.safeParse(createUserDto);
+    if (!parsed.success) {
+      throw new BadRequestException(parsed.error.message);
+    }
+    const hashedPassword = await this.hashPassword(parsed.data.password);
     return this.prisma.user.create({
       data: {
-        email: createUserDto.email,
-        name: createUserDto.name,
+        email: parsed.data.email,
+        name: parsed.data.name,
         password: hashedPassword,
-        role: createUserDto.role,
+        role: parsed.data.role,
       },
       select: {
         id: true,
@@ -24,16 +28,18 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({
-      where: {
-        email,
-      },
+    const user = await this.prisma.user.findUnique({
+      where: { email },
       select: {
         id: true,
         role: true,
         password: true,
       },
     });
+    if (!user) {
+      return null;
+    }
+    return user;
   }
 
   async validateUserCredentials(email: string, password: string) {
