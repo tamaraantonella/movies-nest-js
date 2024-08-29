@@ -25,10 +25,10 @@ async function bootstrap() {
   patchNestjsSwagger();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('api-docs', app, document);
   const port = configService.get<ConfigProps['port']>('port');
   await app.listen(port).then(() => {
-    console.log(`⚡​Listening at http://localhost:${port}/${globalPrefix}`);
+    console.log(`⚡​Listening at PORT /${port}/${globalPrefix}`);
   });
 }
 
