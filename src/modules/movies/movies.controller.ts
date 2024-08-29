@@ -17,9 +17,9 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { PublicAccess } from '../auth/decorators/public.decorator';
@@ -48,13 +48,21 @@ export class MoviesController {
       },
     },
   })
-  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  @ApiForbiddenResponse({
+    description: 'Forbidden',
+    schema: {
+      example: {
+        message: 'Forbidden',
+        error: 'Forbidden',
+        statusCode: 403,
+      },
+    },
+  })
   @Post()
   create(@Body() createMovieDto: CreateMovieDto) {
     return this.moviesService.create(createMovieDto);
   }
 
-  @HttpCode(HttpStatus.OK)
   @ApiOkResponse({
     type: MoviesEnvelopeDto,
   })
@@ -84,6 +92,16 @@ export class MoviesController {
         message: 'Validation failed',
         error: 'Bad Request',
         statusCode: 400,
+      },
+    },
+  })
+  @ApiForbiddenResponse({
+    description: 'Forbidden',
+    schema: {
+      example: {
+        message: 'Forbidden',
+        error: 'Forbidden',
+        statusCode: 403,
       },
     },
   })
@@ -120,6 +138,16 @@ export class MoviesController {
       },
     },
   })
+  @ApiForbiddenResponse({
+    description: 'Forbidden',
+    schema: {
+      example: {
+        message: 'Forbidden',
+        error: 'Forbidden',
+        statusCode: 403,
+      },
+    },
+  })
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -152,6 +180,16 @@ export class MoviesController {
         message: 'Movie not found',
         error: 'Not Found',
         statusCode: 404,
+      },
+    },
+  })
+  @ApiForbiddenResponse({
+    description: 'Forbidden',
+    schema: {
+      example: {
+        message: 'Forbidden',
+        error: 'Forbidden',
+        statusCode: 403,
       },
     },
   })
