@@ -5,6 +5,7 @@ import { EnvelopeSchema } from '@/modules/movies/dto/envelope.dto';
 
 export const MovieSchema = extendApi(
   z.object({
+    id: z.number().int(),
     title: z.string().min(1).max(50),
     created: z.coerce.date(),
     edited: z.coerce.date().nullable(),
@@ -17,7 +18,9 @@ export const MovieSchema = extendApi(
     updatedAt: z.date(),
   }),
 );
+
 export class MovieDto extends createZodDto(MovieSchema) {}
 
 export const MoviesEnvelopeSchema = EnvelopeSchema(MovieSchema.array());
+
 export class MoviesEnvelopeDto extends createZodDto(MoviesEnvelopeSchema) {}
