@@ -10,7 +10,7 @@ export class ScheduledTasksService {
     private moviesService: MoviesService,
   ) {}
 
-  @Cron(CronExpression.EVERY_30_SECONDS)
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async syncSwapiMovies() {
     const moviesFromSwapi = await this.swapiService.getFilms();
     await this.moviesService.syncMoviesWithAPI(moviesFromSwapi);
